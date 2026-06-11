@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Queen Music Player</title>
 
+<style>
+
+body{
+    background:#111;
+    text-align:center;
+    margin:20px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+#band{
+    width:750px;
+    max-width:95%;
+    border-radius:12px;
+    box-shadow:0 0 25px rgba(255,255,255,0.25);
+}
+
+#btn{
+    margin-top:20px;
+    font-size:30px;
+    padding:15px 50px;
+    background:#c00000;
+    color:white;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#status{
+    color:white;
+    margin-top:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<img id="band" src="Muppitsqueen.jpg" alt="Queen Band">
+
+<br>
+
+<button id="btn" onclick="toggleMusic()">
+PLAY MUSIC
+</button>
+
+<div id="status">
+Ready To Rock!
+</div>
+
+<audio id="player"></audio>
+
+<script>
+
+const playlist = [
+
+"https://files.happyfile.net/uploads/Do_You_Love_Me_2a02%3Aa456%3A2faa%3A0%3A4db8%3A2cb1%3A6515%3Af75e_happyfile.net_b1852d51.mp3",
+
+"https://files.happyfile.net/uploads/Im_A_Scatman_2a02%3Aa456%3A2faa%3A0%3A4db8%3A2cb1%3A6515%3Af75e_happyfile.net_b529fec3.mp3",
+
+"https://files.happyfile.net/uploads/Babe_We_Re_Gonna_Love_Tonight_2a02%3Aa456%3A2faa%3A0%3A4db8%3A2cb1%3A6515%3Af75e_happyfile.net_6f70f8d0.mp3"
+
+];
+
+const trackNames = [
+"Do You Love Me",
+"I'm A Scatman",
+"Babe We're Gonna Love Tonight"
+];
+
+let current = 0;
+let playing = false;
+
+const player = document.getElementById("player");
+const btn = document.getElementById("btn");
+const status = document.getElementById("status");
+
+function playTrack(index){
+
+    player.src = playlist[index];
+    player.play();
+
+    status.innerHTML =
+    "♪ NOW PLAYING: " + trackNames[index];
+}
+
+function toggleMusic(){
+
+    if(!playing){
+
+        if(player.src === ""){
+            playTrack(current);
+        }else{
+            player.play();
+        }
+
+        btn.innerHTML = "STOP MUSIC";
+        playing = true;
+
+    }else{
+
+        player.pause();
+
+        btn.innerHTML = "PLAY MUSIC";
+        status.innerHTML = "Music Paused";
+
+        playing = false;
+    }
+}
+
+player.addEventListener("ended", function(){
+
+    current++;
+
+    if(current >= playlist.length){
+        current = 0;
+    }
+
+    playTrack(current);
+
+});
+
+</script>
+
+</body>
+</html>
